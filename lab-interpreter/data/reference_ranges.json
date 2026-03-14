@@ -1,0 +1,450 @@
+{
+  "HbA1c": {
+    "name": "Hemoglobin A1c",
+    "unit": "%",
+    "male_range": [4.0, 5.6],
+    "female_range": [4.0, 5.6],
+    "category": "metabolic"
+  },
+  "Glucose": {
+    "name": "Fasting Glucose",
+    "unit": "mg/dL",
+    "male_range": [70, 100],
+    "female_range": [70, 100],
+    "category": "metabolic"
+  },
+  "Total Cholesterol": {
+    "name": "Total Cholesterol",
+    "unit": "mg/dL",
+    "male_range": [0, 200],
+    "female_range": [0, 200],
+    "category": "lipids"
+  },
+  "LDL": {
+    "name": "LDL Cholesterol",
+    "unit": "mg/dL",
+    "male_range": [0, 100],
+    "female_range": [0, 100],
+    "category": "lipids"
+  },
+  "HDL": {
+    "name": "HDL Cholesterol",
+    "unit": "mg/dL",
+    "male_range": [40, 300],
+    "female_range": [50, 300],
+    "category": "lipids"
+  },
+  "Triglycerides": {
+    "name": "Triglycerides",
+    "unit": "mg/dL",
+    "male_range": [0, 150],
+    "female_range": [0, 150],
+    "category": "lipids"
+  },
+  "TSH": {
+    "name": "Thyroid Stimulating Hormone",
+    "unit": "mIU/L",
+    "male_range": [0.4, 4.0],
+    "female_range": [0.4, 4.0],
+    "category": "thyroid"
+  },
+  "T3": {
+    "name": "Triiodothyronine (Free)",
+    "unit": "pg/mL",
+    "male_range": [2.3, 4.2],
+    "female_range": [2.3, 4.2],
+    "category": "thyroid"
+  },
+  "T4": {
+    "name": "Thyroxine (Free)",
+    "unit": "ng/dL",
+    "male_range": [0.8, 1.8],
+    "female_range": [0.8, 1.8],
+    "category": "thyroid"
+  },
+  "Vitamin D": {
+    "name": "Vitamin D (25-OH)",
+    "unit": "ng/mL",
+    "male_range": [30, 100],
+    "female_range": [30, 100],
+    "category": "vitamins"
+  },
+  "Vitamin B12": {
+    "name": "Cobalamin (B12)",
+    "unit": "pg/mL",
+    "male_range": [200, 900],
+    "female_range": [200, 900],
+    "category": "vitamins"
+  },
+  "Iron": {
+    "name": "Serum Iron",
+    "unit": "µg/dL",
+    "male_range": [75, 175],
+    "female_range": [65, 165],
+    "category": "blood"
+  },
+  "Ferritin": {
+    "name": "Ferritin",
+    "unit": "ng/mL",
+    "male_range": [30, 300],
+    "female_range": [15, 200],
+    "category": "blood"
+  },
+  "Hemoglobin": {
+    "name": "Hemoglobin",
+    "unit": "g/dL",
+    "male_range": [13.5, 17.5],
+    "female_range": [12.0, 15.5],
+    "category": "blood"
+  },
+  "WBC": {
+    "name": "White Blood Cells",
+    "unit": "x10^3/µL",
+    "male_range": [4.5, 11.0],
+    "female_range": [4.5, 11.0],
+    "category": "blood"
+  },
+  "RBC": {
+    "name": "Red Blood Cells",
+    "unit": "x10^6/µL",
+    "male_range": [4.7, 6.1],
+    "female_range": [4.2, 5.4],
+    "category": "blood"
+  },
+  "Platelets": {
+    "name": "Platelets",
+    "unit": "x10^3/µL",
+    "male_range": [150, 400],
+    "female_range": [150, 400],
+    "category": "blood"
+  },
+  "ALT": {
+    "name": "Alanine Aminotransferase",
+    "unit": "U/L",
+    "male_range": [7, 56],
+    "female_range": [7, 45],
+    "category": "liver"
+  },
+  "AST": {
+    "name": "Aspartate Aminotransferase",
+    "unit": "U/L",
+    "male_range": [10, 40],
+    "female_range": [10, 34],
+    "category": "liver"
+  },
+  "Creatinine": {
+    "name": "Serum Creatinine",
+    "unit": "mg/dL",
+    "male_range": [0.74, 1.35],
+    "female_range": [0.59, 1.04],
+    "category": "kidney"
+  },
+  "eGFR": {
+    "name": "Estimated Glomerular Filtration Rate",
+    "unit": "mL/min/1.73m²",
+    "male_range": [60, 120],
+    "female_range": [60, 120],
+    "category": "kidney"
+  },
+  "Sodium": {
+    "name": "Serum Sodium",
+    "unit": "mEq/L",
+    "male_range": [136, 145],
+    "female_range": [136, 145],
+    "category": "metabolic"
+  },
+  "Potassium": {
+    "name": "Serum Potassium",
+    "unit": "mEq/L",
+    "male_range": [3.5, 5.0],
+    "female_range": [3.5, 5.0],
+    "category": "metabolic"
+  },
+  "Calcium": {
+    "name": "Total Calcium",
+    "unit": "mg/dL",
+    "male_range": [8.5, 10.2],
+    "female_range": [8.5, 10.2],
+    "category": "metabolic"
+  },
+  "Magnesium": {
+    "name": "Serum Magnesium",
+    "unit": "mg/dL",
+    "male_range": [1.7, 2.2],
+    "female_range": [1.7, 2.2],
+    "category": "metabolic"
+  },
+  "CRP": {
+    "name": "C-Reactive Protein",
+    "unit": "mg/L",
+    "male_range": [0.0, 3.0],
+    "female_range": [0.0, 3.0],
+    "category": "inflammation"
+  },
+  "Testosterone": {
+    "name": "Total Testosterone",
+    "unit": "ng/dL",
+    "male_range": [300, 1000],
+    "female_range": [15, 70],
+    "category": "hormones"
+  },
+  "Estrogen": {
+    "name": "Estradiol",
+    "unit": "pg/mL",
+    "male_range": [10, 40],
+    "female_range": [30, 400],
+    "category": "hormones"
+  },
+  "Cortisol": {
+    "name": "Cortisol (Morning)",
+    "unit": "µg/dL",
+    "male_range": [5, 23],
+    "female_range": [5, 23],
+    "category": "hormones"
+  },
+  "Insulin": {
+    "name": "Fasting Insulin",
+    "unit": "µIU/mL",
+    "male_range": [2, 12],
+    "female_range": [2, 12],
+    "category": "hormones"
+  },
+  "Uric Acid": {
+    "name": "Uric Acid",
+    "unit": "mg/dL",
+    "male_range": [3.5, 7.2],
+    "female_range": [2.6, 6.0],
+    "category": "metabolic"
+  },
+  "Folate": {
+    "name": "Folic Acid",
+    "unit": "ng/mL",
+    "male_range": [5.4, 16.0],
+    "female_range": [5.4, 16.0],
+    "category": "vitamins"
+  },
+  "Phosphorus": {
+    "name": "Serum Phosphorus",
+    "unit": "mg/dL",
+    "male_range": [2.5, 4.5],
+    "female_range": [2.5, 4.5],
+    "category": "metabolic"
+  },
+  "Albumin": {
+    "name": "Serum Albumin",
+    "unit": "g/dL",
+    "male_range": [3.5, 5.0],
+    "female_range": [3.5, 5.0],
+    "category": "liver"
+  },
+  "Bilirubin": {
+    "name": "Total Bilirubin",
+    "unit": "mg/dL",
+    "male_range": [0.1, 1.2],
+    "female_range": [0.1, 1.2],
+    "category": "liver"
+  },
+  "GGT": {
+    "name": "Gamma-Glutamyl Transferase",
+    "unit": "U/L",
+    "male_range": [9, 48],
+    "female_range": [9, 32],
+    "category": "liver"
+  },
+  "BUN": {
+    "name": "Blood Urea Nitrogen",
+    "unit": "mg/dL",
+    "male_range": [7, 20],
+    "female_range": [7, 20],
+    "category": "kidney"
+  },
+  "Chloride": {
+    "name": "Serum Chloride",
+    "unit": "mEq/L",
+    "male_range": [98, 107],
+    "female_range": [98, 107],
+    "category": "metabolic"
+  },
+  "CO2": {
+    "name": "Bicarbonate",
+    "unit": "mEq/L",
+    "male_range": [23, 29],
+    "female_range": [23, 29],
+    "category": "metabolic"
+  },
+  "Glucose (Random)": {
+    "name": "Random Blood Glucose",
+    "unit": "mg/dL",
+    "male_range": [70, 140],
+    "female_range": [70, 140],
+    "category": "metabolic"
+  },
+  "Triglyceride to HDL Ratio": {
+    "name": "Triglyceride/HDL Ratio",
+    "unit": "ratio",
+    "male_range": [0.0, 2.0],
+    "female_range": [0.0, 2.0],
+    "category": "lipids"
+  },
+  "VLDL": {
+    "name": "Very Low-Density Lipoprotein",
+    "unit": "mg/dL",
+    "male_range": [0, 30],
+    "female_range": [0, 30],
+    "category": "lipids"
+  },
+  "Apolipoprotein A-I": {
+    "name": "ApoA-I",
+    "unit": "mg/dL",
+    "male_range": [110, 205],
+    "female_range": [110, 205],
+    "category": "lipids"
+  },
+  "Apolipoprotein B": {
+    "name": "ApoB",
+    "unit": "mg/dL",
+    "male_range": [60, 130],
+    "female_range": [60, 120],
+    "category": "lipids"
+  },
+  "Lipoprotein(a)": {
+    "name": "Lp(a)",
+    "unit": "mg/dL",
+    "male_range": [0, 30],
+    "female_range": [0, 30],
+    "category": "lipids"
+  },
+  "PSA": {
+    "name": "Prostate-Specific Antigen",
+    "unit": "ng/mL",
+    "male_range": [0, 4.0],
+    "female_range": [0, 0],
+    "category": "hormones"
+  },
+  "DHEA-S": {
+    "name": "Dehydroepiandrosterone Sulfate",
+    "unit": "µg/dL",
+    "male_range": [100, 620],
+    "female_range": [30, 260],
+    "category": "hormones"
+  },
+  "Progesterone": {
+    "name": "Progesterone",
+    "unit": "ng/mL",
+    "male_range": [0.0, 0.8],
+    "female_range": [0.2, 25.0],
+    "category": "hormones"
+  },
+  "Thyroid Peroxidase Antibodies": {
+    "name": "TPO Antibodies",
+    "unit": "IU/mL",
+    "male_range": [0, 35],
+    "female_range": [0, 35],
+    "category": "thyroid"
+  },
+  "Thyroglobulin Antibodies": {
+    "name": "Thyroglobulin Antibody",
+    "unit": "IU/mL",
+    "male_range": [0, 40],
+    "female_range": [0, 40],
+    "category": "thyroid"
+  },
+  "TSH Receptor Antibodies": {
+    "name": "TRAB",
+    "unit": "IU/L",
+    "male_range": [0, 1.75],
+    "female_range": [0, 1.75],
+    "category": "thyroid"
+  },
+  "Homocysteine": {
+    "name": "Homocysteine",
+    "unit": "µmol/L",
+    "male_range": [4.6, 12.0],
+    "female_range": [4.4, 10.6],
+    "category": "metabolic"
+  },
+  "Lipoprotein-Associated Phospholipase A2": {
+    "name": "Lp-PLA2",
+    "unit": "nmol/min/mL",
+    "male_range": [0, 235],
+    "female_range": [0, 195],
+    "category": "inflammation"
+  },
+  "Fibrinogen": {
+    "name": "Fibrinogen",
+    "unit": "mg/dL",
+    "male_range": [200, 400],
+    "female_range": [200, 400],
+    "category": "blood"
+  },
+  "Vitamin A": {
+    "name": "Retinol",
+    "unit": "µg/dL",
+    "male_range": [30, 80],
+    "female_range": [30, 80],
+    "category": "vitamins"
+  },
+  "Vitamin E": {
+    "name": "Alpha-Tocopherol",
+    "unit": "mg/L",
+    "male_range": [5.7, 20.6],
+    "female_range": [5.7, 20.6],
+    "category": "vitamins"
+  },
+  "Vitamin K": {
+    "name": "Vitamin K1",
+    "unit": "ng/mL",
+    "male_range": [0.1, 2.2],
+    "female_range": [0.1, 2.2],
+    "category": "vitamins"
+  },
+  "Selenium": {
+    "name": "Serum Selenium",
+    "unit": "µg/L",
+    "male_range": [70, 150],
+    "female_range": [70, 150],
+    "category": "vitamins"
+  },
+  "Zinc": {
+    "name": "Serum Zinc",
+    "unit": "µg/dL",
+    "male_range": [60, 120],
+    "female_range": [60, 110],
+    "category": "vitamins"
+  },
+  "Copper": {
+    "name": "Serum Copper",
+    "unit": "µg/dL",
+    "male_range": [70, 150],
+    "female_range": [80, 155],
+    "category": "metabolic"
+  },
+  "Fasting Insulin to Glucose Ratio": {
+    "name": "FGIR",
+    "unit": "ratio",
+    "male_range": [0.5, 3.0],
+    "female_range": [0.5, 3.0],
+    "category": "metabolic"
+  },
+  "Hemoglobin A1c (Glucose Average)": {
+    "name": "Glucose Average",
+    "unit": "mg/dL",
+    "male_range": [65, 100],
+    "female_range": [65, 100],
+    "category": "metabolic"
+  },
+  "Mean Corpuscular Volume": {
+    "name": "MCV",
+    "unit": "fL",
+    "male_range": [80, 100],
+    "female_range": [80, 100],
+    "category": "blood"
+  },
+  "Mean Corpuscular Hemoglobin": {
+    "name": "MCH",
+    "unit": "pg",
+    "male_range": [27, 33],
+    "female_range": [27, 33],
+    "category": "blood"
+  }
+}
