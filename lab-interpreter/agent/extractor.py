@@ -2,8 +2,9 @@
 PDF Text Extraction Module
 Extracts text and structured data from lab result PDFs
 """
-import fitz  # PyMuPDF
+import pdfplumber
 import re
+from io import BytesIO
 
 
 def extract_text_from_pdf(pdf_bytes: bytes) -> str:
@@ -21,15 +22,15 @@ def extract_text_from_pdf(pdf_bytes: bytes) -> str:
     """
     try:
         # Open PDF from bytes
-        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        pdf_stream = BytesIO(pdf_bytes)
         text = ""
         
-        # Extract text from all pages
-        for page in doc:
-            page_text = page.get_text()
-            text += page_text + "\n"
-        
-        doc.close()
+        with pdfplumber.open(pdf_stream) as pdf:
+            # Extract text from all pages
+            for page in pdf.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
         
         # Clean the extracted text
         cleaned_text = _clean_text(text)

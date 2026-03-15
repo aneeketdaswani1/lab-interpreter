@@ -1,13 +1,13 @@
 """
-Claude AI Explanation Module
-Uses Claude API with streaming to generate biomarker explanations
+Gemini AI Explanation Module
+Uses Google Gemini API to generate biomarker explanations
 """
 import os
 from typing import List, Dict, Optional
-from anthropic import Anthropic
+import google.generativeai as genai
 
 
-def explain_biomarker(biomarker: Dict, studies: List[Dict] = None, client: Anthropic = None) -> str:
+def explain_biomarker(biomarker: Dict, studies: List[Dict] = None) -> str:
     """
     Generate a friendly explanation for a single biomarker result.
     
@@ -15,14 +15,16 @@ def explain_biomarker(biomarker: Dict, studies: List[Dict] = None, client: Anthr
         biomarker: Biomarker dict from parser with keys:
                    {name, value, unit, sex_specific_range, status, category, percent_from_range}
         studies: List of study dicts from researcher (optional)
-        client: Anthropic client instance
         
     Returns:
-        Full explanation string streamed from Claude
+        Full explanation string from Gemini
     """
-    if client is None:
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        client = Anthropic(api_key=api_key)
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        return "Error: GOOGLE_API_KEY not set"
+    
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash")
     
     if studies is None:
         studies = []
@@ -65,20 +67,14 @@ Structure your explanation as:
     
     user_message = f"Please explain this blood test result:\n\n{context}"
     
-    # Stream response
+    # Generate response
     explanation = ""
     
     try:
-        with client.messages.stream(
-            model="claude-sonnet-4-20250514",
-            max_tokens=400,
-            system=system_prompt,
-            messages=[
-                {"role": "user", "content": user_message}
-            ]
-        ) as stream:
-            for text in stream.text_stream:
-                explanation += text
+        # Combine system prompt with user message
+        full_message = f"{system_prompt}\n\n{user_message}"
+        response = model.generate_content(full_message)
+        explanation = response.text
     
     except Exception as e:
         explanation = f"Error generating explanation: {str(e)}"
@@ -86,22 +82,20 @@ Structure your explanation as:
     return explanation
 
 
-def explain_all_flagged(biomarkers: List[Dict], research_dict: Dict[str, List[Dict]],
-                       client: Anthropic = None) -> Dict[str, str]:
+def explain_all_flagged(biomarkers: List[Dict], research_dict: Dict[str, List[Dict]]) -> Dict[str, str]:
     """
     Generate explanations for all flagged (abnormal) biomarkers.
     
     Args:
         biomarkers: Full list of biomarker dicts from parser
         research_dict: Dict mapping biomarker names to study lists from researcher
-        client: Anthropic client instance
         
     Returns:
         Dict mapping biomarker names to explanation strings
     """
-    if client is None:
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        client = Anthropic(api_key=api_key)
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        return {}
     
     # Filter for flagged biomarkers (status != 'normal')
     flagged = [b for b in biomarkers if b.get('status') != 'normal']
@@ -141,7 +135,7 @@ def explain_all_flagged(biomarkers: List[Dict], research_dict: Dict[str, List[Di
         studies = research_dict.get(name, [])
         
         # Generate explanation
-        explanation = explain_biomarker(biomarker, studies, client)
+        explanation = explain_biomarker(biomarker, studies)
         explanations[name] = explanation
         
         if not progress_bar:

@@ -1,15 +1,14 @@
 """
 30-Day Action Plan Generator Module
-Creates personalized health protocols using Claude AI
+Creates personalized health protocols using Google Gemini
 """
 import os
 from typing import List, Dict, Optional
-from anthropic import Anthropic
+import google.generativeai as genai
 
 
 def generate_action_plan(biomarkers: List[Dict], user_profile: Dict, 
-                        research_dict: Dict[str, List[Dict]], 
-                        client: Anthropic = None) -> str:
+                        research_dict: Dict[str, List[Dict]]) -> str:
     """
     Generate a comprehensive 30-day personalized action plan.
     
@@ -20,14 +19,16 @@ def generate_action_plan(biomarkers: List[Dict], user_profile: Dict,
                      dietary_preference: 'omnivore' | 'vegetarian' | 'vegan' | 'keto'
                      health_goals: list of strings (e.g., ["weight loss", "energy", "longevity"])
         research_dict: Dict mapping biomarker names to study lists
-        client: Anthropic client instance
         
     Returns:
-        Full 30-day action plan as markdown string with streaming
+        Full 30-day action plan as markdown string
     """
-    if client is None:
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        client = Anthropic(api_key=api_key)
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        return "Error: GOOGLE_API_KEY not set"
+    
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash")
     
     # Filter for flagged biomarkers
     flagged = [b for b in biomarkers if b.get('status') != 'normal']
@@ -69,20 +70,14 @@ Week 1 | Week 2 | Week 3–4 goals with specific checkpoints
 
 Remember: Be specific with foods, portions, and exercises. Base all recommendations on the research provided."""
     
-    # Stream response
+    # Generate response
     plan = ""
     
     try:
-        with client.messages.stream(
-            model="claude-sonnet-4-20250514",
-            max_tokens=1500,
-            system=system_prompt,
-            messages=[
-                {"role": "user", "content": user_message}
-            ]
-        ) as stream:
-            for text in stream.text_stream:
-                plan += text
+        # Combine system prompt with user message
+        full_message = f"{system_prompt}\n\n{user_message}"
+        response = model.generate_content(full_message)
+        plan = response.text
     
     except Exception as e:
         plan = f"Error generating action plan: {str(e)}"

@@ -7,7 +7,7 @@ import re
 import os
 from typing import List, Dict, Optional, Tuple
 from difflib import SequenceMatcher
-from anthropic import Anthropic
+import google.generativeai as genai
 
 
 # Unit conversion constants
@@ -42,15 +42,14 @@ def parse_biomarkers(raw_text: str, sex: str = "male") -> List[Dict]:
     # Attempt regex-based extraction
     biomarkers = _extract_via_regex(raw_text, reference_ranges, sex)
     
-    # If no biomarkers found via regex, try Claude fallback
+    # If no biomarkers found via regex, try Gemini fallback
     if not biomarkers or len(biomarkers) < 3:
         try:
-            client = Anthropic()
-            claude_biomarkers = fallback_claude_extraction(raw_text, client, reference_ranges, sex)
-            if claude_biomarkers:
-                biomarkers.extend(claude_biomarkers)
+            gemini_biomarkers = fallback_gemini_extraction(raw_text, reference_ranges, sex)
+            if gemini_biomarkers:
+                biomarkers.extend(gemini_biomarkers)
         except Exception as e:
-            print(f"Claude fallback extraction failed: {e}")
+            print(f"Gemini fallback extraction failed: {e}")
     
     return biomarkers
 
@@ -93,9 +92,10 @@ def _extract_via_regex(raw_text: str, reference_ranges: Dict, sex: str) -> List[
                     rf'\b{re.escape(alias)}\b'  # Exact word boundary match
                     r'(?:\s*[:=]?\s*)?'  # Optional separator
                     r'(\d+\.?\d*)'  # Value (integer or decimal)
-                    r'(?:\s*'  # Optional unit
-                    r'([a-zA-Z/%\-°]+|mIU/L|µmol|mmol/L|mg/dL|ng/mL|pg/mL|x10\^[0-9]/?[a-zA-Z]*))?'
+                    r'(?:\s*'  # Optional unit group
+                    r'([a-zA-Z/%\-°]+|mIU/L|µmol|mmol/L|mg/dL|ng/mL|pg/mL|x10\^[0-9]/?[a-zA-Z]*)'  # Unit pattern
                     r')?'  # Unit is optional
+                    r')?'  # Close optional unit group
                 )
                 
                 match = re.search(pattern, line, re.IGNORECASE)
@@ -226,17 +226,16 @@ def _calculate_status(value: float, min_val: float, max_val: float) -> str:
         return "normal"
 
 
-def fallback_claude_extraction(raw_text: str, client: Anthropic,
+def fallback_gemini_extraction(raw_text: str,
                               reference_ranges: Dict, sex: str = "male") -> List[Dict]:
     """
-    Fallback extraction using Claude AI.
+    Fallback extraction using Google Gemini Flash.
     
-    When regex extraction finds few/no biomarkers, send raw text to Claude
+    When regex extraction finds few/no biomarkers, send raw text to Gemini
     asking it to extract lab results as JSON.
     
     Args:
         raw_text: Raw lab report text
-        client: Anthropic client instance
         reference_ranges: Reference ranges dictionary
         sex: Patient sex for range selection
         
@@ -247,7 +246,15 @@ def fallback_claude_extraction(raw_text: str, client: Anthropic,
     if sex not in ["male", "female"]:
         sex = "male"
     
-    # Create prompt for Claude
+    # Configure Gemini
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        return []
+    
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-2.5-flash")
+    
+    # Create prompt for Gemini
     prompt = f"""You are an expert medical lab analyst. Extract ALL lab test results from this text.
 
 Return ONLY a valid JSON array with NO OTHER TEXT. Each result should be an object with:
@@ -266,17 +273,10 @@ Lab Report Text:
 {raw_text}"""
     
     try:
-        message = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
-            max_tokens=2000,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
-        )
+        response = model.generate_content(prompt)
+        response_text = response.text
         
-        response_text = message.content[0].text
-        
-        # Extract JSON from response (Claude might add markdown code blocks)
+        # Extract JSON from response (Gemini might add markdown code blocks)
         json_match = re.search(r'\[.*\]', response_text, re.DOTALL)
         if not json_match:
             return []
@@ -287,7 +287,7 @@ Lab Report Text:
         if not isinstance(extracted_data, list):
             return []
         
-        # Convert Claude's output to biomarker dicts
+        # Convert Gemini's output to biomarker dicts
         biomarkers = []
         for item in extracted_data:
             if not isinstance(item, dict) or 'name' not in item or 'value' not in item:
@@ -311,10 +311,10 @@ Lab Report Text:
         return biomarkers
     
     except json.JSONDecodeError:
-        print("Failed to parse Claude's JSON response")
+        print("Failed to parse Gemini's JSON response")
         return []
     except Exception as e:
-        print(f"Claude extraction error: {e}")
+        print(f"Gemini extraction error: {e}")
         return []
 
 
